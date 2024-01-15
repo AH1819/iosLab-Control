@@ -71,14 +71,14 @@ public class DBConfig extends javax.swing.JFrame {
             new String[]{
                 "font:bold +10",
                 "font:bold",
-                "showClearButton:true;JTextField.placeholderText=Usuario",
-                "showClearButton:true;JTextField.placeholderText=Contraseña",
+                "JTextField.placeholderText=Usuario",
+                "JTextField.placeholderText=Contraseña",
                 "font:bold",
-                "showClearButton:true;JTextField.placeholderText=Host",
+                "JTextField.placeholderText=Host",
                 "font:bold",
-                "showClearButton:true;JTextField.placeholderText=Nombre",
+                "JTextField.placeholderText=Nombre",
                 "font:bold",
-                "showClearButton:true;JTextField.placeholderText=Puerto",
+                "JTextField.placeholderText=Puerto",
                 "font:plain",
                 "",
                 "font:plain"
@@ -148,6 +148,16 @@ public class DBConfig extends javax.swing.JFrame {
         jLabel9.setText("Puerto");
         crazyPanel1.add(jLabel9);
 
+        txtPuerto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtPuertoMouseClicked(evt);
+            }
+        });
+        txtPuerto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPuertoActionPerformed(evt);
+            }
+        });
         txtPuerto.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtPuertoKeyReleased(evt);
@@ -237,7 +247,12 @@ public class DBConfig extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void TestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TestActionPerformed
-        TestearConexion();
+        new Thread() {
+            @Override
+            public void run() {
+                TestearConexion();
+            }
+        }.start();
     }//GEN-LAST:event_TestActionPerformed
 
     private void txtUserKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUserKeyReleased
@@ -278,6 +293,14 @@ public class DBConfig extends javax.swing.JFrame {
         vista.setVisible(true);
     }//GEN-LAST:event_formWindowClosed
 
+    private void txtPuertoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPuertoMouseClicked
+
+    }//GEN-LAST:event_txtPuertoMouseClicked
+
+    private void txtPuertoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPuertoActionPerformed
+
+    }//GEN-LAST:event_txtPuertoActionPerformed
+
     private void ValidarTest() {
         Guardar.setEnabled(false);
         Test.setEnabled(
@@ -287,16 +310,35 @@ public class DBConfig extends javax.swing.JFrame {
                 && !txtNombre.getText().isEmpty()
                 && !txtPuerto.getText().isEmpty()
         );
+        if (test != null) {
+            ValidarTestData();
+        }
+    }
+
+    private void ValidarTestData() {
+        Test.setEnabled(
+                !test.getUsuario().equals(txtUser.getText())
+                || !test.getPassword().equals(new String(txtPassword.getPassword()))
+                || !test.getPuerto().equals(txtPuerto.getText())
+                || !test.getIp().equals(txtHost.getText())
+                || !test.getBase().equals(txtNombre.getText())
+        );
     }
 
     private void TestearConexion() {
+        Test.setEnabled(false);
+        txtUser.setEnabled(false);
+        txtPassword.setEnabled(false);
+        txtHost.setEnabled(false);
+        txtNombre.setEnabled(false);
+        txtPuerto.setEnabled(false);
+        MessageError.setText("<html>Ejecutando prueba. . .</html>");
         test = new Logeo();
         test.setUsuario(txtUser.getText());
         test.setPassword(new String(txtPassword.getPassword()));
         test.setPuerto(txtPuerto.getText());
         test.setIp(txtHost.getText());
         test.setBase(txtNombre.getText());
-
         cn = ConexionBD.getInstance();
         cn.conectar();
         if (!ErrorsAndSuccesses.isConexion()) {
@@ -308,7 +350,14 @@ public class DBConfig extends javax.swing.JFrame {
             MessageError.setText("Conexion establecida sin ningun error");
             Status.setBackground(Color.green);
         }
+        Test.setEnabled(true);
+        txtUser.setEnabled(true);
+        txtPassword.setEnabled(true);
+        txtHost.setEnabled(true);
+        txtNombre.setEnabled(true);
+        txtPuerto.setEnabled(true);
         Guardar.setEnabled(status_conexion);
+        ValidarTestData();
     }
 
     private void GuardarConexion() {
@@ -323,7 +372,6 @@ public class DBConfig extends javax.swing.JFrame {
         }
         Guardar.setEnabled(false);
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Guardar;
     private javax.swing.JLabel MessageError;

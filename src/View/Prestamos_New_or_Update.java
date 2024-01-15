@@ -302,6 +302,18 @@ public class Prestamos_New_or_Update extends SimpleForm {
                 FechaMousePressed(evt);
             }
         });
+        Fecha.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                FechaInputMethodTextChanged(evt);
+            }
+        });
+        Fecha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FechaActionPerformed(evt);
+            }
+        });
         Fecha.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 FechaPropertyChange(evt);
@@ -406,6 +418,7 @@ public class Prestamos_New_or_Update extends SimpleForm {
     private void FechaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FechaMousePressed
         CalendarModal cm = new CalendarModal(app, true, Fecha);
         cm.setVisible(true);
+        ValidarCampos();
     }//GEN-LAST:event_FechaMousePressed
 
     private void EntradaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EntradaMousePressed
@@ -456,6 +469,14 @@ public class Prestamos_New_or_Update extends SimpleForm {
         ValidarCampos();
     }//GEN-LAST:event_C_IpadActionPerformed
 
+    private void FechaInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_FechaInputMethodTextChanged
+
+    }//GEN-LAST:event_FechaInputMethodTextChanged
+
+    private void FechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FechaActionPerformed
+
+    }//GEN-LAST:event_FechaActionPerformed
+
     private void ValidarHora() {
         if (!Entrada.getText().isEmpty() && !Entrada.getText().equals("--:-- --") && !Entrada.getText().equals("--:--") && !Salida.getText().isEmpty() && !Salida.getText().equals("--:-- --") && !Salida.getText().equals("--:--")) {
             Time hora1 = convertirStringATime(Entrada.getText());
@@ -505,9 +526,11 @@ public class Prestamos_New_or_Update extends SimpleForm {
         return horaString;
     }
 
-    private void ValidarCampos() {
+    public void ValidarCampos() {
         if (pr != null) {
             //Actualizar. Los nuevos datos no deben ser igual a los anteriores
+            System.out.println(Fecha.getText());
+            System.out.println("fecha: " + !Fecha.getText().equals(pr.getFecha().toString()));
             Guardar.setEnabled(
                     Macs.getSelectedIndex() > 0 && !Macs.getSelectedItem().equals(pr.getId_mac())
                     || Ipads.getSelectedIndex() > 0 && !Ipads.getSelectedItem().equals(pr.getId_ipad())
