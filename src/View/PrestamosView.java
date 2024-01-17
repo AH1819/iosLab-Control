@@ -107,6 +107,7 @@ public class PrestamosView extends SimpleForm implements TableActionEvent {
     }
 
     private void init(JTable table) {
+        cmdNote.setIcon(new FlatSVGIcon("Recursos/Icons/note.svg", 0.45f));
         txtSearch.putClientProperty(FlatClientProperties.TEXT_FIELD_TRAILING_ICON, new FlatSVGIcon("Recursos/Icons/search.svg", 0.35f));
         //  Change scroll style
         JScrollPane scroll = (JScrollPane) table.getParent().getParent();
@@ -142,7 +143,7 @@ public class PrestamosView extends SimpleForm implements TableActionEvent {
         Alumnos = new javax.swing.JComboBox<>();
         txtSearch = new javax.swing.JTextField();
         Cargando = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        cmdNote = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         PrestamosTable = new javax.swing.JTable();
 
@@ -223,14 +224,13 @@ public class PrestamosView extends SimpleForm implements TableActionEvent {
         Cargando.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Icons/cargando.gif"))); // NOI18N
         crazyPanel2.add(Cargando);
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Icons/nota-btn.png"))); // NOI18N
-        jButton1.setText("Mostrar notas");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        cmdNote.setText("Mostrar notas");
+        cmdNote.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                cmdNoteActionPerformed(evt);
             }
         });
-        crazyPanel2.add(jButton1);
+        crazyPanel2.add(cmdNote);
 
         crazyPanel1.add(crazyPanel2);
 
@@ -344,10 +344,10 @@ public class PrestamosView extends SimpleForm implements TableActionEvent {
 
     }//GEN-LAST:event_PrestamosTableMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void cmdNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdNoteActionPerformed
         NotasModalView nv = new NotasModalView(app, true);
         nv.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_cmdNoteActionPerformed
 
     private void AlumnosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_AlumnosItemStateChanged
         if (evt.getStateChange() == ItemEvent.SELECTED) {
@@ -411,9 +411,9 @@ public class PrestamosView extends SimpleForm implements TableActionEvent {
     private javax.swing.JLabel Cargando;
     private javax.swing.JComboBox<String> Docentes;
     private javax.swing.JTable PrestamosTable;
+    private javax.swing.JButton cmdNote;
     private raven.crazypanel.CrazyPanel crazyPanel1;
     private raven.crazypanel.CrazyPanel crazyPanel2;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;

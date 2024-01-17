@@ -168,6 +168,7 @@ public class AlumnosView extends SimpleForm {
 
         crazyPanel1.add(crazyPanel2);
 
+        AlumnosTable.setAutoCreateRowSorter(true);
         AlumnosTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 

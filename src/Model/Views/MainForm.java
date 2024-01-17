@@ -1,5 +1,7 @@
 package Model.Views;
 
+import View.Application;
+import View.Notas_Globales;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import java.awt.Component;
@@ -16,9 +18,11 @@ import net.miginfocom.swing.MigLayout;
 public class MainForm extends JPanel {
 
     private final javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
+    private Application app;
 
-    public MainForm() {
+    public MainForm(Application app) {
         init();
+        this.app = app;
     }
 
     private void init() {
@@ -36,11 +40,11 @@ public class MainForm extends JPanel {
                 + "width:10");
         scroll.getVerticalScrollBar().setUnitIncrement(10);
         add(header);
-        add(scroll,"span,growy");
+        add(scroll, "span,growy");
     }
 
     private JPanel createHeader() {
-        JPanel panel = new JPanel(new MigLayout("fill,insets 3", "[][grow]"));
+        JPanel panel = new JPanel(new MigLayout("fill,insets 3", "[][grow]push[]"));
         panel.putClientProperty(FlatClientProperties.STYLE, ""
                 + "background:null;"
                 + "border:5,5,5,5,$Component.borderColor,,20");
@@ -52,7 +56,11 @@ public class MainForm extends JPanel {
 
         jLabel1.setText("  Prestamos");
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 20));
-
+        JButton cmdNotas = createButton(new FlatSVGIcon("Recursos/Icons/notemn.svg"));
+        cmdNotas.addActionListener(e -> {
+            Notas_Globales ng = new Notas_Globales(app, true);
+            ng.setVisible(true);
+        });
         cmdMenu.putClientProperty(FlatClientProperties.STYLE, ""
                 + "arc:999;"
                 + "[dark]background:$Drawer.background;"
@@ -62,7 +70,8 @@ public class MainForm extends JPanel {
                 + "innerFocusWidth:0;"
                 + "margin:3,5,3,5");
         panel.add(cmdMenu);
-        panel.add(jLabel1, "span,growx");
+        panel.add(jLabel1);
+        panel.add(cmdNotas);
 
         return panel;
     }

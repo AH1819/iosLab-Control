@@ -187,6 +187,11 @@ public class Login extends javax.swing.JFrame {
     }
 
     public static void main(String[] args) {
+        FlatLaf.registerCustomDefaultsSource("com.raven.datechooser.demo");
+        String listMonth[] = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
+        String listDays[] = {"Lu.", "Ma.", "Mi.", "Ju.","Vi.", "Sá.", "Do."};
+        UIManager.put("DateChooser.listMonth", listMonth);
+        UIManager.put("DateChooser.listDay", listDays);
         FlatRobotoFont.install();
         FlatLaf.registerCustomDefaultsSource("Recursos.Themes");
         UIManager.put("defaultFont", new Font(FlatRobotoFont.FAMILY, Font.PLAIN, 13));

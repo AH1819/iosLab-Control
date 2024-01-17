@@ -26,7 +26,7 @@ public class FormManager {
     private FormManager(JFrame frame) {
         this.frame = frame;
         panelSlider = new PanelSlider();
-        mainForm = new MainForm();
+        mainForm = new MainForm((Application) frame);
         menu = new Menu(new MyDrawerBuilder((Application) frame));
         this.frame.getContentPane().add(panelSlider);
     }
@@ -52,9 +52,9 @@ public class FormManager {
         instance.menuShowing = false;
         instance.panelSlider.addSlide(FormManager.mainForm, SimpleTransition.getHideMenuTransition(instance.menu.getDrawerBuilder().getDrawerWidth()));
     }
-    
-    public static void CambiarTexto(String texto){
+
+    public static void CambiarTexto(String texto) {
         mainForm.ActualizarTexto(texto);
     }
-    
+
 }

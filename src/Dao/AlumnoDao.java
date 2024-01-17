@@ -23,13 +23,11 @@ public class AlumnoDao {
     public ArrayList<Alumno> GetAll() {
         alumnos = new ArrayList<>();
 
-        String sql = "select * from alumno";
+        String sql = "select * from alumno order by matricula asc";
         PreparedStatement comando = null;
 
         try {
             comando = conexion.conectar().prepareStatement(sql);
-            System.out.println(comando);
-            System.out.println(conexion.conectar().getCatalog());
             Resultado = comando.executeQuery();
 
             while (Resultado.next()) {

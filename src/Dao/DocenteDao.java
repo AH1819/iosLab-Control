@@ -23,7 +23,7 @@ public class DocenteDao {
     public ArrayList<Docente> GetAll() {
         docentes = new ArrayList<>();
 
-        String sql = "select * from docente";
+        String sql = "select * from docente order by numero_plaza asc";
         PreparedStatement comando = null;
 
         try {

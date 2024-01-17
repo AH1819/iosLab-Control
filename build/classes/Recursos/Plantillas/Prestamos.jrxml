@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PrestamosRango" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4097b67a-5420-4cc4-bf14-47bf363b724d">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DataAdapter.jrdax"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="551"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="435"/>
+	<queryString>
+		<![CDATA[SELECT pr.id_prestamo, 
+CASE 
+WHEN a.matricula IS NOT NULL THEN a.matricula 
+WHEN d.numero_plaza IS NOT NULL THEN d.numero_plaza 
+ELSE 'N/E' 
+END AS id_usuario,  
+(p.nombre ||' '||p.app||' '||p.apm) AS nombre,
+CASE 
+WHEN pr.id_mac IS NULL THEN 'N/E' 
+ELSE pr.id_mac 
+END AS id_mac,
+CASE 
+WHEN pr.id_ipad IS NULL THEN 'N/E' 
+ELSE pr.id_ipad 
+END AS id_ipad,
+pr.hora_entra,
+COALESCE(pr.hora_sale, '00:00:00') AS hora_sale,
+pr.fecha_prestamo
+FROM prestamos pr 
+INNER JOIN persona p 
+ON p.id_usuario = pr.id_usuario
+LEFT JOIN alumno a 
+ON p.id_usuario = a.id_usuario
+LEFT JOIN docente d 
+ON p.id_usuario = d.id_usuario 
+ORDER BY fecha_prestamo ASC]]>
+	</queryString>
+	<field name="id_prestamo" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id_prestamo"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_prestamo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="prestamos"/>
+	</field>
+	<field name="id_usuario" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="id_usuario"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_usuario"/>
+	</field>
+	<field name="nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
+	</field>
+	<field name="id_mac" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="id_mac"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_mac"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="prestamos"/>
+	</field>
+	<field name="id_ipad" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="id_ipad"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_ipad"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="prestamos"/>
+	</field>
+	<field name="hora_entra" class="java.sql.Time">
+		<property name="com.jaspersoft.studio.field.name" value="hora_entra"/>
+		<property name="com.jaspersoft.studio.field.label" value="hora_entra"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="prestamos"/>
+	</field>
+	<field name="hora_sale" class="java.sql.Time">
+		<property name="com.jaspersoft.studio.field.name" value="hora_sale"/>
+		<property name="com.jaspersoft.studio.field.label" value="hora_sale"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="prestamos"/>
+	</field>
+	<field name="fecha_prestamo" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="fecha_prestamo"/>
+		<property name="com.jaspersoft.studio.field.label" value="fecha_prestamo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="prestamos"/>
+	</field>
+	<group name="Prestamos">
+		<groupExpression><![CDATA[$F{id_prestamo}]]></groupExpression>
+		<groupHeader>
+			<band height="51">
+				<textField>
+					<reportElement x="20" y="10" width="20" height="40" uuid="5334c684-c546-4b1e-ac55-6df8479e0568"/>
+					<box>
+						<pen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Garamond" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{id_prestamo}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="50" y="10" width="50" height="40" uuid="156a07fc-4951-470a-9f63-6b4e3ba57b54"/>
+					<box leftPadding="0" rightPadding="0">
+						<pen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Garamond" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{id_usuario}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="111" y="10" width="159" height="40" uuid="4529ef39-4d6e-4aa9-8b17-2a9f5f08c20c"/>
+					<box>
+						<pen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Garamond" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="280" y="10" width="20" height="40" uuid="5b372e7f-333c-407f-bb82-a165e0d9d1be"/>
+					<box>
+						<pen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Garamond" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{id_mac}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="310" y="9" width="20" height="41" uuid="fa33a90d-5357-48a6-b13d-5362aa11560e"/>
+					<box>
+						<pen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Garamond" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{id_ipad}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="340" y="10" width="57" height="40" uuid="db5b9d56-2393-48a4-92f8-1a6def06f051"/>
+					<box>
+						<pen lineWidth="0.0"/>
+					</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Garamond" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{fecha_prestamo}.toString()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="411" y="10" width="49" height="39" uuid="1da1813a-f9bf-480b-9a1d-43899a75a2bf"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Garamond" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{hora_entra}.toString()]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="470" y="9" width="50" height="40" uuid="c8cdb996-8da9-4a86-b461-5c8defc68831"/>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Garamond" size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{hora_sale}.toString()]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="90" splitType="Stretch">
+			<staticText>
+				<reportElement key="" x="193" y="20" width="82" height="51" uuid="510b14c2-df2e-4cc9-8486-5a86fce6d13b">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Garamond" size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Prestamos]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="375" y="71" width="164" height="19" uuid="1314639a-40aa-46cb-b400-40456614afcd"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Garamond" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<image scaleImage="RealSize" rotation="None" isUsingCache="true" onErrorType="Icon">
+				<reportElement x="0" y="1" width="89" height="89" uuid="9edf5ddd-c560-46c5-a258-cd0bda97e208">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineColor="#000000"/>
+				</box>
+				<graphicElement fill="Solid"/>
+				<imageExpression><![CDATA["C:/Users/Hitler/Documents/GitHub/SwiftLab2.0/src/Recursos/Images/LogoUnach.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="48" splitType="Stretch">
+			<rectangle radius="8">
+				<reportElement x="10" y="7" width="535" height="33" uuid="41fbfdf7-f1a3-4e91-8b4b-8048e699d6c9"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="20" y="7" width="20" height="33" uuid="6eb04dd4-361a-44d8-a238-a7b42a90d75c"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Garamond" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N°]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="50" y="7" width="50" height="33" uuid="b634287e-428a-4521-b20e-08f7d9423f5a"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Garamond" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Matricula/Plaza]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="7" width="160" height="33" uuid="d6637523-f191-426e-8dad-2ac9b33cba1e"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Garamond" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="7" width="20" height="33" uuid="edff536a-1b73-4643-b9ff-bc7fe62a330c"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Garamond" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mac]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="7" width="20" height="33" uuid="5079e9e7-c174-4aef-b5b4-a1a6e50137b8"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Garamond" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ipad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="340" y="8" width="60" height="32" uuid="ed0e014a-868d-44a0-93e4-1129dc8434cf"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Garamond" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="410" y="7" width="50" height="33" uuid="6335e21a-8217-41f7-831c-63e1c8d555d4"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Garamond" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Entrada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="470" y="7" width="50" height="33" uuid="181cdfe8-a61c-41ed-a060-182e267a54e1"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Garamond" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Salida]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="210" y="12" width="100" height="30" uuid="1705b83a-cb2f-4c52-9ed5-0f07b75ef800"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="310" y="12" width="100" height="30" uuid="70f49884-1a63-4966-98be-76e6a59694c7"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" of " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

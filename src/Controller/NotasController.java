@@ -24,6 +24,10 @@ public class NotasController {
         return ND.GetAllPR();
     }
 
+    public ArrayList<Notas> GetAllNotasGlobal() {
+        return ND.GetAllNotasGlobal();
+    }
+
     public boolean AddNotaEQ(Notas nota) {
         return ND.InsertNotaEQ(nota);
     }

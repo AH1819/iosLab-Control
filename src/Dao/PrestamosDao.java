@@ -54,7 +54,8 @@ public class PrestamosDao {
                 + "LEFT JOIN alumno a "
                 + "ON p.id_usuario = a.id_usuario "
                 + "LEFT JOIN docente d "
-                + "ON p.id_usuario = d.id_usuario;";
+                + "ON p.id_usuario = d.id_usuario "
+                + "ORDER BY pr.fecha_prestamo DESC;";
         PreparedStatement comando = null;
         try {
             comando = conexion.conectar().prepareStatement(sql);
@@ -160,5 +161,5 @@ public class PrestamosDao {
         }
         return false;
     }
-
+    
 }

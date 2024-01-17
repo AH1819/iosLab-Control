@@ -1,5 +1,6 @@
 package Model.Views;
 
+import Model.Database.Datos_Cargados;
 import View.AcercaDe;
 import View.AlumnosView;
 import View.Application;
@@ -7,6 +8,7 @@ import View.DocentesView;
 import View.EquiposView;
 import View.Login;
 import View.PrestamosView;
+import View.ReportesView;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import java.awt.Color;
@@ -158,6 +160,10 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                         FormManager.CambiarTexto("  Equipos");
                         FormManager.showForm(new EquiposView(app));
                         break;
+                    case 4:
+                        FormManager.CambiarTexto("  Reportes");
+                        FormManager.showForm(new ReportesView());
+                        break;
                     case 5:
                         FormManager.CambiarTexto("  Acerca de");
                         FormManager.showForm(new AcercaDe());
@@ -165,6 +171,11 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
                     case 6:
                         Login log = new Login();
                         log.setVisible(true);
+                        Datos_Cargados.setAlumnos_guardados(null);
+                        Datos_Cargados.setDocentes_guardados(null);
+                        Datos_Cargados.setIpads_guardadas(null);
+                        Datos_Cargados.setMacs_guardadas(null);
+                        Datos_Cargados.setPrestamos_guardados(null);
                         app.dispose();
                         break;
                 }
@@ -186,7 +197,7 @@ public class MyDrawerBuilder extends SimpleDrawerBuilder {
 
     @Override
     public int getDrawerWidth() {
-        return 150;
+        return 160;
     }
 
 }

@@ -224,6 +224,7 @@ public class EquiposView extends SimpleForm implements TableActionEvent {
 
         crazyPanel2.add(crazyPanel3);
 
+        MacsTable.setAutoCreateRowSorter(true);
         MacsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -333,6 +334,7 @@ public class EquiposView extends SimpleForm implements TableActionEvent {
 
         crazyPanel4.add(crazyPanel5);
 
+        IpadsTable.setAutoCreateRowSorter(true);
         IpadsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 

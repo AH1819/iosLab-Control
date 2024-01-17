@@ -144,7 +144,31 @@ public class NotasDao {
         }
         return nt;
     }
+    
+    public ArrayList<Notas> GetAllNotasGlobal() {
+        nt = new ArrayList<>();
+        String sql = "SELECT * FROM notas WHERE tipo = 'G' ORDER BY fecha DESC";
+        PreparedStatement comando = null;
 
+        try {
+            comando = conexion.conectar().prepareStatement(sql);
+            Resultado = comando.executeQuery();
+
+            while (Resultado.next()) {
+                nota = new Notas();
+                nota.setNumero(Resultado.getInt("id_referencia"));
+                nota.setFecha(Resultado.getString("fecha"));
+                nota.setDescripcion(Resultado.getString("descripcion"));
+                nt.add(nota);
+            }
+            conexion.conectar().close();
+            comando.close();
+        } catch (SQLException ex) {
+            return nt;
+        }
+        return nt;
+    }
+    
     public boolean InsertNotaEQ(Notas nota) {
         boolean status = false;
         System.out.println(nota.getNumero());

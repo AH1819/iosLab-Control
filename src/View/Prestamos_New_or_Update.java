@@ -111,6 +111,8 @@ public class Prestamos_New_or_Update extends SimpleForm {
         } else {
             Ipads.setEnabled(false);
         }
+        C_Mac.setEnabled(false);
+        C_Ipad.setEnabled(false);
     }
 
     private void ActualizarPrestamo() {
@@ -292,6 +294,7 @@ public class Prestamos_New_or_Update extends SimpleForm {
 
         Fecha.setEditable(false);
         Fecha.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM-dd"))));
+        Fecha.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Fecha.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 FechaFocusGained(evt);
@@ -399,10 +402,10 @@ public class Prestamos_New_or_Update extends SimpleForm {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(crazyPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(crazyPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(Guardar)
-                .addGap(0, 0, 0))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -443,10 +446,12 @@ public class Prestamos_New_or_Update extends SimpleForm {
 
     private void MacsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_MacsItemStateChanged
         ValidarCampos();
+        C_Mac.setEnabled(Macs.getSelectedIndex() > 0);
     }//GEN-LAST:event_MacsItemStateChanged
 
     private void IpadsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_IpadsItemStateChanged
         ValidarCampos();
+        C_Ipad.setEnabled(Ipads.getSelectedIndex() > 0);
     }//GEN-LAST:event_IpadsItemStateChanged
 
     private void FechaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_FechaPropertyChange
@@ -529,8 +534,6 @@ public class Prestamos_New_or_Update extends SimpleForm {
     public void ValidarCampos() {
         if (pr != null) {
             //Actualizar. Los nuevos datos no deben ser igual a los anteriores
-            System.out.println(Fecha.getText());
-            System.out.println("fecha: " + !Fecha.getText().equals(pr.getFecha().toString()));
             Guardar.setEnabled(
                     Macs.getSelectedIndex() > 0 && !Macs.getSelectedItem().equals(pr.getId_mac())
                     || Ipads.getSelectedIndex() > 0 && !Ipads.getSelectedItem().equals(pr.getId_ipad())

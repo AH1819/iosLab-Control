@@ -14,6 +14,8 @@ public class NotaAdd_Update extends javax.swing.JDialog {
     String dispo;
     NotasController EC = new NotasController();
     NotasModalView ntv;
+    Notas_Globales ng;
+    boolean status;
     EquiposView ev;
     PrestamosView pv;
 
@@ -40,37 +42,31 @@ public class NotaAdd_Update extends javax.swing.JDialog {
     }
 
     //Constructor para Notas Globales
-    /*public NotaAdd_Update(java.awt.Frame parent, boolean modal, NotasViewMenu nvm) {
+    public NotaAdd_Update(java.awt.Dialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.ng = (Notas_Globales) parent;
+        status = false;
         this.setLocationRelativeTo(this);
         this.jLabel2.setText("Global");
-        this.nvm = nvm;
-    }*/
-
-    //Construtor para editar Nota
-    public NotaAdd_Update(NotasModalView ntv, boolean modal, String referencia, String id, String nota) {
-        super(ntv, modal);
-        initComponents();
-        this.jLabel1.setText("Editar Nota");
-        jLabel2.setText(id.contains("M") || id.contains("I") ? "Equipo:" : "Prestacion:");
-        this.ntv = ntv;
-        this.setLocationRelativeTo(this);
-        this.id.setText(id);
-        this.texto.setText(nota);
-        this.identificador = referencia;
     }
 
     //Construtor para editar Nota
-    public NotaAdd_Update(java.awt.Frame parent, boolean modal, String referencia, String id, String nota) {
+    public NotaAdd_Update(java.awt.Dialog parent, boolean modal, String referencia, String id, String nota) {
         super(parent, modal);
         initComponents();
+        try {
+            this.ng = (Notas_Globales) parent;
+        } catch (Exception e) {
+            this.ntv = (NotasModalView) parent;
+        }
         this.jLabel1.setText("Editar Nota");
         if (id.contains("M") || id.contains("I")) {
             jLabel2.setText("Equipo:");
         } else if (id.contains("N/E")) {
             jLabel2.setText("Global:");
             id = referencia;
+            status = true;
         } else {
             jLabel2.setText("Prestacion:");
         }
@@ -110,18 +106,18 @@ public class NotaAdd_Update extends javax.swing.JDialog {
     }
 
     //Insertar nota global
-    /*private void InsertarNotaGB() {
+    private void InsertarNotaGB() {
         Notas nt = new Notas();
         nt.setTipo("G");
         nt.setDescripcion(texto.getText());
         if (EC.AddNotaGB(nt)) {
             JOptionPane.showMessageDialog(this, "Nota guardada", "Exito", JOptionPane.INFORMATION_MESSAGE);
-            nvm.CargarNotas();
+            ng.CargarNotasGB();
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, "No se pudo guardar", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }*/
+    }
 
     //Editar notas
     private void EditarNota(Integer id) {
@@ -237,12 +233,12 @@ public class NotaAdd_Update extends javax.swing.JDialog {
         if (pv != null) {
             InsertarNotaPR(Integer.valueOf(identificador));
         }
-        if (ntv != null) {
+        if (ntv != null || (ng != null && jLabel1.getText().equals("Editar Nota"))) {
             EditarNota(Integer.valueOf(identificador));
         }
-        /*if (nvm != null) {
+        if (ng != null && jLabel1.getText().equals("Agregar Nota")) {
             InsertarNotaGB();
-        }*/
+        }
     }//GEN-LAST:event_GuardarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

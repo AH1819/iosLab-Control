@@ -9,7 +9,7 @@ import javax.swing.JFormattedTextField;
  * @author Hitler
  */
 public class TimeModal extends javax.swing.JDialog {
-    
+
     public TimeModal(java.awt.Frame parent, boolean modal, JFormattedTextField hora) {
         super(parent, modal);
         initComponents();
@@ -22,7 +22,7 @@ public class TimeModal extends javax.swing.JDialog {
         }
         Time.setEditor(hora);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -59,7 +59,7 @@ public class TimeModal extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        Time.setEditor(null); 
+        Time.setEditor(null);
     }//GEN-LAST:event_formWindowClosing
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
