@@ -98,6 +98,16 @@ public class ReportesView extends javax.swing.JPanel {
             null
         ));
 
+        crazyPanel2.setFlatLafStyleComponent(new raven.crazypanel.FlatLafStyleComponent(
+            "background:$Table.background",
+            new String[]{
+                "",
+                "background:lighten(@background,8%);borderWidth:1",
+                "",
+                "background:lighten(@background,8%);borderWidth:1",
+                ""
+            }
+        ));
         crazyPanel2.setMigLayoutConstraints(new raven.crazypanel.MigLayoutConstraints(
             "",
             "[][][]push[][]",

@@ -5,6 +5,7 @@
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="551"/>
 	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="435"/>
+	<parameter name="Logo" class="java.io.InputStream"/>
 	<queryString>
 		<![CDATA[SELECT pr.id_prestamo, 
 CASE 
@@ -81,7 +82,7 @@ ORDER BY fecha_prestamo ASC]]>
 						<pen lineWidth="0.0"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Garamond" size="10"/>
+						<font fontName="Times New Roman" size="10"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{id_prestamo}]]></textFieldExpression>
 				</textField>
@@ -91,7 +92,7 @@ ORDER BY fecha_prestamo ASC]]>
 						<pen lineWidth="0.0"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Garamond" size="10"/>
+						<font fontName="Times New Roman" size="10"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{id_usuario}]]></textFieldExpression>
 				</textField>
@@ -101,51 +102,54 @@ ORDER BY fecha_prestamo ASC]]>
 						<pen lineWidth="0.0"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Garamond" size="10"/>
+						<font fontName="Times New Roman" size="10"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="280" y="10" width="20" height="40" uuid="5b372e7f-333c-407f-bb82-a165e0d9d1be"/>
+					<reportElement x="280" y="10" width="30" height="40" uuid="5b372e7f-333c-407f-bb82-a165e0d9d1be"/>
 					<box>
 						<pen lineWidth="0.0"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Garamond" size="10"/>
+						<font fontName="Times New Roman" size="10"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{id_mac}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="310" y="9" width="20" height="41" uuid="fa33a90d-5357-48a6-b13d-5362aa11560e"/>
+					<reportElement x="320" y="10" width="30" height="41" uuid="fa33a90d-5357-48a6-b13d-5362aa11560e"/>
 					<box>
 						<pen lineWidth="0.0"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Garamond" size="10"/>
+						<font fontName="Times New Roman" size="10"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{id_ipad}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="340" y="10" width="57" height="40" uuid="db5b9d56-2393-48a4-92f8-1a6def06f051"/>
+					<reportElement x="362" y="9" width="57" height="40" uuid="db5b9d56-2393-48a4-92f8-1a6def06f051"/>
 					<box>
 						<pen lineWidth="0.0"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Garamond" size="10"/>
+						<font fontName="Times New Roman" size="10"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{fecha_prestamo}.toString()]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="411" y="10" width="49" height="39" uuid="1da1813a-f9bf-480b-9a1d-43899a75a2bf"/>
+					<reportElement x="430" y="10" width="39" height="39" uuid="1da1813a-f9bf-480b-9a1d-43899a75a2bf"/>
+					<box>
+						<pen lineWidth="0.0"/>
+					</box>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Garamond" size="10"/>
+						<font fontName="Times New Roman" size="10"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{hora_entra}.toString()]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="470" y="9" width="50" height="40" uuid="c8cdb996-8da9-4a86-b461-5c8defc68831"/>
+					<reportElement x="480" y="9" width="40" height="40" uuid="c8cdb996-8da9-4a86-b461-5c8defc68831"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Garamond" size="10"/>
+						<font fontName="Times New Roman" size="10"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{hora_sale}.toString()]]></textFieldExpression>
 				</textField>
@@ -162,18 +166,18 @@ ORDER BY fecha_prestamo ASC]]>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Garamond" size="18" isBold="true"/>
+					<font fontName="Times New Roman" size="18" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Prestamos]]></text>
 			</staticText>
 			<textField pattern="MMMMM dd, yyyy">
 				<reportElement x="375" y="71" width="164" height="19" uuid="1314639a-40aa-46cb-b400-40456614afcd"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Garamond" size="12"/>
+					<font fontName="Times New Roman" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
-			<image scaleImage="RealSize" rotation="None" isUsingCache="true" onErrorType="Icon">
+			<image scaleImage="RealSize" rotation="None" isUsingCache="true" onErrorType="Blank">
 				<reportElement x="0" y="1" width="89" height="89" uuid="9edf5ddd-c560-46c5-a258-cd0bda97e208">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
@@ -183,7 +187,7 @@ ORDER BY fecha_prestamo ASC]]>
 					<pen lineColor="#000000"/>
 				</box>
 				<graphicElement fill="Solid"/>
-				<imageExpression><![CDATA["C:/Users/Hitler/Documents/GitHub/SwiftLab2.0/src/Recursos/Images/LogoUnach.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{Logo}]]></imageExpression>
 			</image>
 		</band>
 	</title>
@@ -195,56 +199,56 @@ ORDER BY fecha_prestamo ASC]]>
 			<staticText>
 				<reportElement x="20" y="7" width="20" height="33" uuid="6eb04dd4-361a-44d8-a238-a7b42a90d75c"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Garamond" size="10" isBold="true"/>
+					<font fontName="Times New Roman" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[N°]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="50" y="7" width="50" height="33" uuid="b634287e-428a-4521-b20e-08f7d9423f5a"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Garamond" size="10" isBold="true"/>
+					<font fontName="Times New Roman" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Matricula/Plaza]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="110" y="7" width="160" height="33" uuid="d6637523-f191-426e-8dad-2ac9b33cba1e"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Garamond" size="10" isBold="true"/>
+					<font fontName="Times New Roman" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nombre]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="280" y="7" width="20" height="33" uuid="edff536a-1b73-4643-b9ff-bc7fe62a330c"/>
+				<reportElement x="280" y="7" width="30" height="33" uuid="edff536a-1b73-4643-b9ff-bc7fe62a330c"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Garamond" size="10" isBold="true"/>
+					<font fontName="Times New Roman" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Mac]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="310" y="7" width="20" height="33" uuid="5079e9e7-c174-4aef-b5b4-a1a6e50137b8"/>
+				<reportElement x="320" y="6" width="30" height="33" uuid="5079e9e7-c174-4aef-b5b4-a1a6e50137b8"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Garamond" size="10" isBold="true"/>
+					<font fontName="Times New Roman" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Ipad]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="340" y="8" width="60" height="32" uuid="ed0e014a-868d-44a0-93e4-1129dc8434cf"/>
+				<reportElement x="360" y="7" width="60" height="32" uuid="ed0e014a-868d-44a0-93e4-1129dc8434cf"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Garamond" size="10" isBold="true"/>
+					<font fontName="Times New Roman" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Fecha]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="410" y="7" width="50" height="33" uuid="6335e21a-8217-41f7-831c-63e1c8d555d4"/>
+				<reportElement x="430" y="8" width="40" height="33" uuid="6335e21a-8217-41f7-831c-63e1c8d555d4"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Garamond" size="10" isBold="true"/>
+					<font fontName="Times New Roman" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Entrada]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="470" y="7" width="50" height="33" uuid="181cdfe8-a61c-41ed-a060-182e267a54e1"/>
+				<reportElement x="480" y="7" width="40" height="33" uuid="181cdfe8-a61c-41ed-a060-182e267a54e1"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Garamond" size="10" isBold="true"/>
+					<font fontName="Times New Roman" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Salida]]></text>
 			</staticText>
@@ -257,12 +261,16 @@ ORDER BY fecha_prestamo ASC]]>
 		<band height="54" splitType="Stretch">
 			<textField>
 				<reportElement x="210" y="12" width="100" height="30" uuid="1705b83a-cb2f-4c52-9ed5-0f07b75ef800"/>
-				<textElement textAlignment="Right"/>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman"/>
+				</textElement>
 				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
 				<reportElement x="310" y="12" width="100" height="30" uuid="70f49884-1a63-4966-98be-76e6a59694c7"/>
-				<textElement textAlignment="Left"/>
+				<textElement textAlignment="Left">
+					<font fontName="Times New Roman"/>
+				</textElement>
 				<textFieldExpression><![CDATA[" of " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>
