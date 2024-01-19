@@ -174,7 +174,12 @@ public class ReportesView extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void imprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imprimirActionPerformed
-        new Jasper().Generar_Reporte(Inicio, Fin, status);
+        new Thread() {
+            @Override
+            public void run() {
+                new Jasper().Generar_Reporte(Inicio, Fin, status);
+            }
+        }.start();
     }//GEN-LAST:event_imprimirActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -189,6 +194,7 @@ public class ReportesView extends javax.swing.JPanel {
         if (!filtro.isEmpty() && filtro.get(0).getNombre() != null) {
             DataTable();
         } else {
+            imprimir.setVisible(false);
             JOptionPane.showMessageDialog(this, "No hay registros para mostrar", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }
@@ -217,6 +223,7 @@ public class ReportesView extends javax.swing.JPanel {
         filtro = (ArrayList<Prestamos>) Datos_Cargados.getPrestamos_guardados().stream().filter((fecha) -> fecha.getFecha().compareTo(inicio) >= 0 && fecha.getFecha().compareTo(fin) <= 0).collect(Collectors.toList());
         if (!filtro.isEmpty()) {
             modelo.setRowCount(0);
+            imprimir.setVisible(true);
             for (Prestamos pr : filtro) {
                 Object[] fila = {
                     pr.getIdentificador(),

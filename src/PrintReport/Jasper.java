@@ -32,7 +32,7 @@ public class Jasper {
 
                 cargar = JasperFillManager.fillReport(js, parametros, conexion.conectar());
             }
-            JasperViewer jv = new JasperViewer(cargar, false);
+            JasperViewer jv = new JasperViewer(cargar, true);
 
             jv.setVisible(true);
 
