@@ -1,6 +1,9 @@
 package PrintReport;
 
 import Model.Database.ConexionBD;
+import View.ReportesView;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.InputStream;
 import java.sql.Date;
 import java.util.HashMap;
@@ -18,7 +21,7 @@ public class Jasper {
 
     private final ConexionBD conexion = ConexionBD.getInstance();
 
-    public void Generar_Reporte(Date inicio, Date fin, boolean status) {
+    public void Generar_Reporte(ReportesView rv, Date inicio, Date fin, boolean status) {
         InputStream logo = Jasper.class.getResourceAsStream("/Recursos/Images/LogoUnach.png");
 
         Map<String, Object> parametros = new HashMap();
@@ -40,10 +43,19 @@ public class Jasper {
             JasperViewer jv = new JasperViewer(cargar, false);
 
             jv.setVisible(true);
+            jv.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    rv.CargarImprimir.setVisible(false);
+                    rv.imprimir.setEnabled(true);
+                }
+            });
+            System.out.println("eeee");
 
         } catch (JRException ex) {
             Logger.getLogger(Jasper.class.getName()).log(Level.SEVERE, null, ex);
         }
+        System.out.println("eeee");
     }
 
 }

@@ -188,10 +188,13 @@ public class ReportesView extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void imprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imprimirActionPerformed
+        CargarImprimir.setVisible(true);
+        imprimir.setEnabled(false);
+        ReportesView rv = this;
         new Thread() {
             @Override
             public void run() {
-                new Jasper().Generar_Reporte(Inicio, Fin, status);
+                new Jasper().Generar_Reporte(rv, Inicio, Fin, status);
             }
         }.start();
     }//GEN-LAST:event_imprimirActionPerformed
@@ -258,12 +261,12 @@ public class ReportesView extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel CargarImprimir;
+    public javax.swing.JLabel CargarImprimir;
     private javax.swing.JLabel CargarSearch;
     private javax.swing.JTextField Rango;
     private raven.crazypanel.CrazyPanel crazyPanel1;
     private raven.crazypanel.CrazyPanel crazyPanel2;
-    private javax.swing.JButton imprimir;
+    public javax.swing.JButton imprimir;
     private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
