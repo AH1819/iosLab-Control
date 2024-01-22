@@ -41,7 +41,6 @@ public class Insertar_Editar_Equipos extends javax.swing.JDialog {
         }
 
         if (ipad != null) {
-            System.out.println(ipad.getApplepencil());
             this.ipad = ipad;
             this.id.setText(ipad.getNumero());
             this.cargador.setSelected(ipad.getCargador().equals("si"));
@@ -81,6 +80,8 @@ public class Insertar_Editar_Equipos extends javax.swing.JDialog {
                         eqv.CargarEquipos();
                         this.dispose();
                     } else {
+                        Cargando.setVisible(false);
+                        Guardar.setEnabled(true);
                         JOptionPane.showMessageDialog(this, "Hubo un error", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
@@ -111,6 +112,12 @@ public class Insertar_Editar_Equipos extends javax.swing.JDialog {
                 id.setForeground(Color.red);
             }
         }
+        Cargando.setVisible(false);
+        Guardar.setEnabled(true);
+        id.setEnabled(true);
+        N_serie.setEnabled(true);
+        pencil.setEnabled(true);
+        cargador.setEnabled(true);
     }
 
     public void actualizarEquipo() {
@@ -160,6 +167,12 @@ public class Insertar_Editar_Equipos extends javax.swing.JDialog {
                 id.setForeground(Color.red);
             }
         }
+        Cargando.setVisible(false);
+        Guardar.setEnabled(true);
+        id.setEnabled(true);
+        N_serie.setEnabled(true);
+        pencil.setEnabled(true);
+        cargador.setEnabled(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -306,23 +319,31 @@ public class Insertar_Editar_Equipos extends javax.swing.JDialog {
     }//GEN-LAST:event_cargadorKeyReleased
 
     private void cargadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargadorActionPerformed
-
+        ValidarCampos();
     }//GEN-LAST:event_cargadorActionPerformed
 
     private void pencilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pencilActionPerformed
-
+        ValidarCampos();
     }//GEN-LAST:event_pencilActionPerformed
 
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
-        this.Cargando.setVisible(true);
-        if (insertar) {
-            //Insertar equipo
-            insertarEquipo();
-        } else {
-            //Actualizar equipo
-            actualizarEquipo();
-        }
-        this.Cargando.setVisible(false);
+        Cargando.setVisible(true);
+        Guardar.setEnabled(false);
+        id.setEnabled(false);
+        N_serie.setEnabled(false);
+        pencil.setEnabled(false);
+        cargador.setEnabled(false);
+        new Thread() {
+            public void run() {
+                if (insertar) {
+                    //Insertar equipo
+                    insertarEquipo();
+                } else {
+                    //Actualizar equipo
+                    actualizarEquipo();
+                }
+            }
+        }.start();
     }//GEN-LAST:event_GuardarActionPerformed
 
     private void idPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_idPropertyChange
@@ -334,10 +355,27 @@ public class Insertar_Editar_Equipos extends javax.swing.JDialog {
     }//GEN-LAST:event_N_seriePropertyChange
 
     private void ValidarCampos() {
-        Guardar.setEnabled(
-                !id.getText().isEmpty()
-                && !N_serie.getText().isEmpty()
-        );
+        if (insertar) {
+            Guardar.setEnabled(
+                    !id.getText().isEmpty()
+                    && !N_serie.getText().isEmpty()
+            );
+        } else {
+            if (macEQ) {
+                Guardar.setEnabled(
+                        (!id.getText().isEmpty() && !id.getText().equals(mac.getNumero()))
+                        || (!N_serie.getText().isEmpty() && !N_serie.getText().equals(mac.getNumero_serie()))
+                        || cargador.isSelected() != mac.getCargador().equals("si")
+                );
+            } else {
+                Guardar.setEnabled(
+                        (!id.getText().isEmpty() && !id.getText().equals(ipad.getNumero()))
+                        || (!N_serie.getText().isEmpty() && !N_serie.getText().equals(ipad.getNumero_serie()))
+                        || cargador.isSelected() != ipad.getCargador().equals("si")
+                        || pencil.isSelected() != ipad.getApplepencil().equals("si")
+                );
+            }
+        }
     }
 
     private void mostrarMensaje(String mensaje, JTextField textField) {

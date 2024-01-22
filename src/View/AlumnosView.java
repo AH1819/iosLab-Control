@@ -267,7 +267,14 @@ public class AlumnosView extends SimpleForm {
                 }
             }
             if (evt.getClickCount() == 2 && AlumnosTable.getSelectedColumn() == 4) {
-                Baja_Alta();
+                new Thread() {
+                    @Override
+                    public void run() {
+                        Cargando.setVisible(true);
+                        Baja_Alta();
+                        Cargando.setVisible(false);
+                    }
+                }.start();
             }
         }
     }//GEN-LAST:event_AlumnosTableMouseClicked

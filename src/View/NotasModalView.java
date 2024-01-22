@@ -38,7 +38,12 @@ public class NotasModalView extends javax.swing.JDialog implements TableActionEv
         modelo = (DefaultTableModel) Table.getModel();
         this.notaTipo = "P";
         init(Table, 4, 4);
-        CargarNotasPR();
+        new Thread() {
+            @Override
+            public void run() {
+                CargarNotasPR();
+            }
+        }.start();
     }
 
     //Notas de Equipos
@@ -50,7 +55,12 @@ public class NotasModalView extends javax.swing.JDialog implements TableActionEv
         this.notaTipo = tipo;
         this.eqv = eqv;
         this.id = id;
-        CargarNotasEQ(tipo, id);
+        new Thread() {
+            @Override
+            public void run() {
+                CargarNotasEQ(tipo, id);
+            }
+        }.start();
         init(Table, 4, 4);
     }
 
@@ -82,6 +92,7 @@ public class NotasModalView extends javax.swing.JDialog implements TableActionEv
 
         crazyPanel1 = new raven.crazypanel.CrazyPanel();
         jLabel1 = new javax.swing.JLabel();
+        Cargando = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         Table = new javax.swing.JTable();
 
@@ -97,6 +108,7 @@ public class NotasModalView extends javax.swing.JDialog implements TableActionEv
             "[fill]",
             "[fill]",
             new String[]{
+                "split 2,span 2,grow",
                 "",
                 ""
             }
@@ -106,6 +118,9 @@ public class NotasModalView extends javax.swing.JDialog implements TableActionEv
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Notas");
         crazyPanel1.add(jLabel1);
+
+        Cargando.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Icons/cargando.gif"))); // NOI18N
+        crazyPanel1.add(Cargando);
 
         Table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -158,6 +173,7 @@ public class NotasModalView extends javax.swing.JDialog implements TableActionEv
             }
             Table.setModel(modelo);
         }
+        Cargando.setVisible(false);
     }
 
     public void CargarNotasPR() {
@@ -176,6 +192,7 @@ public class NotasModalView extends javax.swing.JDialog implements TableActionEv
             Table.setModel(modelo);
         }
         Table.getColumnModel().getColumn(2).setHeaderValue("Prestacion");
+        Cargando.setVisible(false);
     }
 
     @Override
@@ -184,11 +201,16 @@ public class NotasModalView extends javax.swing.JDialog implements TableActionEv
         nau.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
-                if (notaTipo.contains("M") || notaTipo.contains("I")) {
-                    CargarNotasEQ(notaTipo, id);
-                } else if (notaTipo.contains("P")) {
-                    CargarNotasPR();
-                }
+                new Thread() {
+                    @Override
+                    public void run() {
+                        if (notaTipo.contains("M") || notaTipo.contains("I")) {
+                            CargarNotasEQ(notaTipo, id);
+                        } else if (notaTipo.contains("P")) {
+                            CargarNotasPR();
+                        }
+                    }
+                }.start();
             }
         });
         nau.setVisible(true);
@@ -199,18 +221,25 @@ public class NotasModalView extends javax.swing.JDialog implements TableActionEv
         String[] arreglo = {"Si", "No"};
         int opcionp = JOptionPane.showOptionDialog(this, "¿Esta seguro de eliminar este registro? \nSe borraran todos los datos relacionados", "Eliminar", 0, JOptionPane.ERROR_MESSAGE, null, arreglo, "No");
         if (arreglo[opcionp].equals("Si")) {
+            Cargando.setVisible(true);
             int id_rg = Integer.parseInt(Table.getValueAt(row, 0).toString());
-            ec.DeleteNotas(id_rg);
-            if (notaTipo.contains("P")) {
-                CargarNotasPR();
-            } else {
-                CargarNotasEQ(notaTipo, id);
-                eqv.CargarEquipos();
-            }
+            new Thread() {
+                @Override
+                public void run() {
+                    ec.DeleteNotas(id_rg);
+                    if (notaTipo.contains("P")) {
+                        CargarNotasPR();
+                    } else {
+                        CargarNotasEQ(notaTipo, id);
+                        eqv.CargarEquipos();
+                    }
+                }
+            }.start();
         }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Cargando;
     private javax.swing.JTable Table;
     private raven.crazypanel.CrazyPanel crazyPanel1;
     private javax.swing.JLabel jLabel1;

@@ -5,24 +5,16 @@ import Model.Database.Notas;
 import Model.Views.TableActionCellEditorEQ;
 import Model.Views.TableActionCellRenderEQ;
 import Model.Views.TableActionEvent;
-import Model.Views.ThemesChange;
 import com.formdev.flatlaf.FlatClientProperties;
-import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
-import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
-import com.formdev.flatlaf.themes.FlatMacDarkLaf;
-import com.formdev.flatlaf.themes.FlatMacLightLaf;
-import java.awt.Font;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -42,7 +34,12 @@ public class Notas_Globales extends javax.swing.JDialog implements TableActionEv
         this.setLocationRelativeTo(this);
         modelo = (DefaultTableModel) NotasTable.getModel();
         init(NotasTable, 3, 3);
-        CargarNotasGB();
+        new Thread() {
+            @Override
+            public void run() {
+                CargarNotasGB();
+            }
+        }.start();
     }
 
     private void init(JTable table, int columna, int numcell) {
@@ -82,6 +79,7 @@ public class Notas_Globales extends javax.swing.JDialog implements TableActionEv
             }
             NotasTable.setModel(modelo);
         }
+        Cargando.setVisible(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -90,6 +88,7 @@ public class Notas_Globales extends javax.swing.JDialog implements TableActionEv
 
         crazyPanel1 = new raven.crazypanel.CrazyPanel();
         jLabel1 = new javax.swing.JLabel();
+        Cargando = new javax.swing.JLabel();
         cmdNotas = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         NotasTable = new javax.swing.JTable();
@@ -103,9 +102,10 @@ public class Notas_Globales extends javax.swing.JDialog implements TableActionEv
         crazyPanel1.setMigLayoutConstraints(new raven.crazypanel.MigLayoutConstraints(
             "wrap,fill",
             "[fill]",
-            "[fill]",
+            "",
             new String[]{
-                "split 2",
+                "split 3",
+                "",
                 "",
                 ""
             }
@@ -115,6 +115,10 @@ public class Notas_Globales extends javax.swing.JDialog implements TableActionEv
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Notas Globales");
         crazyPanel1.add(jLabel1);
+
+        Cargando.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Cargando.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Icons/cargando.gif"))); // NOI18N
+        crazyPanel1.add(Cargando);
 
         cmdNotas.setText("Agregar");
         cmdNotas.addActionListener(new java.awt.event.ActionListener() {
@@ -175,7 +179,12 @@ public class Notas_Globales extends javax.swing.JDialog implements TableActionEv
         nau.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
-                CargarNotasGB();
+                new Thread() {
+                    @Override
+                    public void run() {
+                        CargarNotasGB();
+                    }
+                }.start();
             }
         });
         nau.setVisible(true);
@@ -186,12 +195,19 @@ public class Notas_Globales extends javax.swing.JDialog implements TableActionEv
         String[] arreglo = {"Si", "No"};
         int opcionp = JOptionPane.showOptionDialog(this, "¿Esta seguro de eliminar este registro? \nSe borraran todos los datos relacionados", "Eliminar", 0, JOptionPane.ERROR_MESSAGE, null, arreglo, "No");
         if (arreglo[opcionp].equals("Si")) {
+            Cargando.setVisible(true);
             int id_rg = Integer.parseInt(NotasTable.getValueAt(row, 0).toString());
-            ec.DeleteNotas(id_rg);
-            CargarNotasGB();
+            new Thread() {
+                @Override
+                public void run() {
+                    ec.DeleteNotas(id_rg);
+                    CargarNotasGB();
+                }
+            }.start();
         }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Cargando;
     private javax.swing.JTable NotasTable;
     private javax.swing.JButton cmdNotas;
     private raven.crazypanel.CrazyPanel crazyPanel1;

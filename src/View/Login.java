@@ -1,5 +1,6 @@
 package View;
 
+import Dao.TablasDB;
 import Model.Database.ConexionBD;
 import Model.Database.ErrorsAndSuccesses;
 import Model.Database.Logeo;
@@ -25,6 +26,7 @@ public class Login extends javax.swing.JFrame {
 
     public Login() {
         initComponents();
+        Cargando.setVisible(false);
         this.setLocationRelativeTo(this);
         GlassPanePopup.install(this);
         login.putClientProperty(FlatClientProperties.STYLE, ""
@@ -43,6 +45,7 @@ public class Login extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtPass = new javax.swing.JPasswordField();
         cmdLogin = new javax.swing.JButton();
+        Cargando = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -59,16 +62,17 @@ public class Login extends javax.swing.JFrame {
             }
         ));
         login.setMigLayoutConstraints(new raven.crazypanel.MigLayoutConstraints(
-            "wrap 1,fillx,insets 45 45 50 45",
+            "wrap 1,fillx,insets 45 45 45 45",
             "[grow 1,center]15[fill]",
-            "",
+            "[grow 0]",
             new String[]{
                 "wrap 38",
                 "span,grow",
                 "span,grow,wrap 20",
                 "span,grow",
                 "span,grow,wrap 40",
-                "span,grow"
+                "span,grow,wrap 40",
+                "span,grow,wrap 40"
             }
         ));
 
@@ -109,21 +113,25 @@ public class Login extends javax.swing.JFrame {
         });
         login.add(cmdLogin);
 
+        Cargando.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Cargando.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Icons/cargando.gif"))); // NOI18N
+        login.add(Cargando);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(54, Short.MAX_VALUE)
-                .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(login, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
                 .addContainerGap(55, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(28, Short.MAX_VALUE)
-                .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE)
+                .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         pack();
@@ -167,15 +175,24 @@ public class Login extends javax.swing.JFrame {
     }
 
     private void Autentificacion(String user, String password) {
+        Cargando.setVisible(true);
+        txtUser.setEnabled(false);
+        txtPass.setEnabled(false);
+        cmdLogin.setEnabled(false);
         PersistenciaGetSet pgs = new PersistenciaGetSet();
         if (pgs.Leer()) {
             ConexionBD con = ConexionBD.getInstance();
             logeo = new Logeo(user, password);
             con.conectar();
             if (ErrorsAndSuccesses.isConexion()) {
-                Application app = new Application();
-                app.setVisible(true);
-                this.dispose();
+                TablasDB tdb = new TablasDB();
+                if (tdb.ComprobarTablas()) {
+                    Application app = new Application();
+                    app.setVisible(true);
+                    this.dispose();
+                } else {
+                    MessageAlerts.getInstance().showMessage("Faltan las siguientes Tablas", ErrorsAndSuccesses.getCadenaErrorBD(), MessageAlerts.MessageType.ERROR);
+                }
             } else {
                 MessageAlerts.getInstance().showMessage("Credenciales", ErrorsAndSuccesses.getCadenaErrorBD(), MessageAlerts.MessageType.ERROR);
             }
@@ -184,19 +201,23 @@ public class Login extends javax.swing.JFrame {
             dbc.setVisible(true);
             this.setVisible(false);
         }
+        Cargando.setVisible(false);
+        txtUser.setEnabled(true);
+        txtPass.setEnabled(true);
+        cmdLogin.setEnabled(true);
     }
 
     public static void main(String[] args) {
         FlatLaf.registerCustomDefaultsSource("com.raven.datechooser.demo");
         String listMonth[] = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
-        String listDays[] = {"Lu.", "Ma.", "Mi.", "Ju.","Vi.", "Sá.", "Do."};
+        String listDays[] = {"Lu.", "Ma.", "Mi.", "Ju.", "Vi.", "Sá.", "Do."};
         UIManager.put("DateChooser.listMonth", listMonth);
         UIManager.put("DateChooser.listDay", listDays);
         FlatRobotoFont.install();
         FlatLaf.registerCustomDefaultsSource("Recursos.Themes");
         UIManager.put("defaultFont", new Font(FlatRobotoFont.FAMILY, Font.PLAIN, 13));
-        ThemesChange tch = new ThemesChange();
-        if (tch.getMode("Modo")) {
+
+        if (new ThemesChange().getMode("Modo")) {
             FlatMacDarkLaf.setup();
         } else {
             FlatMacLightLaf.setup();
@@ -207,6 +228,7 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Cargando;
     private javax.swing.JButton cmdLogin;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

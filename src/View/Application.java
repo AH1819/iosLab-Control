@@ -36,9 +36,6 @@ public class Application extends JFrame {
         PersonasController pc = new PersonasController();
         pc.CargarAlumnos();
         pc.CargarDocentes();
-        EquiposController ec = new EquiposController();
-        ec.CargarIpad();
-        ec.CargarMacs();
     }
 
 }

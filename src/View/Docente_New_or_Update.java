@@ -48,6 +48,7 @@ public class Docente_New_or_Update extends SimpleForm {
         Procedencia.setText(docente.getInstitucion());
         Email.setText(docente.getCorreo());
         Guardar.setEnabled(false);
+        Cargando.setVisible(false);
     }
 
     private void ComprobarNumeroPlaza(String plaza) {
@@ -107,7 +108,9 @@ public class Docente_New_or_Update extends SimpleForm {
         jLabel10 = new javax.swing.JLabel();
         Procedencia = new javax.swing.JTextField();
         Email = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
         Guardar = new javax.swing.JButton();
+        Cargando = new javax.swing.JLabel();
 
         crazyPanel1.setFlatLafStyleComponent(new raven.crazypanel.FlatLafStyleComponent(
             "background:$Table.background;[light]border:0,0,0,0,shade(@background,5%),,20;[dark]border:0,0,0,0,tint(@background,5%),,20",
@@ -240,6 +243,8 @@ public class Docente_New_or_Update extends SimpleForm {
         });
         crazyPanel1.add(Email);
 
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         Guardar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         Guardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Icons/guardar.png"))); // NOI18N
         Guardar.setText("Guardar");
@@ -249,6 +254,10 @@ public class Docente_New_or_Update extends SimpleForm {
                 GuardarActionPerformed(evt);
             }
         });
+        jPanel1.add(Guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 12, -1, -1));
+
+        Cargando.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Icons/cargando.gif"))); // NOI18N
+        jPanel1.add(Cargando, new org.netbeans.lib.awtextra.AbsoluteConstraints(126, 5, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -258,9 +267,9 @@ public class Docente_New_or_Update extends SimpleForm {
                 .addContainerGap()
                 .addComponent(crazyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1085, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(Guardar)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -269,8 +278,8 @@ public class Docente_New_or_Update extends SimpleForm {
                 .addContainerGap()
                 .addComponent(crazyPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(Guardar)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -315,11 +324,18 @@ public class Docente_New_or_Update extends SimpleForm {
     }//GEN-LAST:event_ProcedenciaKeyReleased
 
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
-        if (docente != null) {
-            Actualizar();
-        } else {
-            Insertar();
-        }
+        Cargando.setVisible(true);
+        Guardar.setEnabled(false);
+        new Thread() {
+            @Override
+            public void run() {
+                if (docente != null) {
+                    Actualizar();
+                } else {
+                    Insertar();
+                }
+            }
+        }.start();
     }//GEN-LAST:event_GuardarActionPerformed
 
     private void EdadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_EdadKeyTyped
@@ -381,10 +397,17 @@ public class Docente_New_or_Update extends SimpleForm {
 
         if (dc.InsertDocente(docente)) {
             JOptionPane.showMessageDialog(app, "Docente registrado con exito", "Registro", JOptionPane.INFORMATION_MESSAGE);
-            dv.CargarDocentes();
-            FormManager.CambiarTexto("  Docentes");
-            FormManager.showForm(dv);
+            new Thread() {
+                @Override
+                public void run() {
+                    dv.CargarDocentes();
+                    FormManager.CambiarTexto("  Docentes");
+                    FormManager.showForm(dv);
+                }
+            }.start();
         } else {
+            Cargando.setVisible(false);
+            Guardar.setEnabled(true);
             JOptionPane.showMessageDialog(app, "Hubo un error al momento de registrar", "Registro", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -403,10 +426,17 @@ public class Docente_New_or_Update extends SimpleForm {
 
         if (dc.UpdateAlumno(docente)) {
             JOptionPane.showMessageDialog(app, "Docente Actualizado con exito", "Actualizacion", JOptionPane.INFORMATION_MESSAGE);
-            dv.CargarDocentes();
-            FormManager.CambiarTexto("  Docentes");
-            FormManager.showForm(dv);
+            new Thread() {
+                @Override
+                public void run() {
+                    dv.CargarDocentes();
+                    FormManager.CambiarTexto("  Docentes");
+                    FormManager.showForm(dv);
+                }
+            }.start();
         } else {
+            Cargando.setVisible(false);
+            Guardar.setEnabled(true);
             JOptionPane.showMessageDialog(app, "Hubo un error al momento de actualizar", "Actualizacion", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -414,6 +444,7 @@ public class Docente_New_or_Update extends SimpleForm {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Apm;
     private javax.swing.JTextField App;
+    private javax.swing.JLabel Cargando;
     private javax.swing.JTextField Edad;
     private javax.swing.JTextField Email;
     private javax.swing.JButton Guardar;
@@ -429,6 +460,7 @@ public class Docente_New_or_Update extends SimpleForm {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel sex;
     // End of variables declaration//GEN-END:variables
 }

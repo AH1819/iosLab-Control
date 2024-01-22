@@ -38,8 +38,13 @@ public class Prestamos_New_or_Update extends SimpleForm {
         this.pv = pv;
         this.alm = alm;
         this.dct = dct;
-        CargarEquipos();
         CargarDatos();
+        new Thread() {
+            @Override
+            public void run() {
+                CargarEquipos();
+            }
+        }.start();
     }
 
     public Prestamos_New_or_Update(Application app, PrestamosView pv, Prestamos pr) {
@@ -47,8 +52,13 @@ public class Prestamos_New_or_Update extends SimpleForm {
         this.app = app;
         this.pv = pv;
         this.pr = pr;
-        CargarEquipos();
         CargarDatos();
+        new Thread() {
+            @Override
+            public void run() {
+                CargarEquipos();
+            }
+        }.start();
     }
 
     private void CargarHoras(JFormattedTextField campo, java.sql.Time hora) {
@@ -77,6 +87,7 @@ public class Prestamos_New_or_Update extends SimpleForm {
             C_Mac.setSelected(pr.isC_mac());
             C_Ipad.setSelected(pr.isC_ipad());
             Credencial.setSelected(pr.isCredencial());
+            Credencial.setText(Credencial.isSelected() ? "Si" : "No");
             CargarHoras(Entrada, pr.getHora_entrada());
             CargarHoras(Salida, pr.getHora_salida());
             ValidarCampos();
@@ -92,27 +103,27 @@ public class Prestamos_New_or_Update extends SimpleForm {
                 Identificador.setText(dct.getNumero_plaza());
             }
         }
+
     }
 
     private void CargarEquipos() {
+        Macs.setEnabled(false);
+        Ipads.setEnabled(false);
         ArrayList<Ipads> ipds = new EquiposController().CargarIpadsAvailable();
         ArrayList<Macs> mcs = new EquiposController().CargarMacsAvailable();
         if (!mcs.isEmpty() && mcs.get(0).getNumero() != null) {
+            Macs.setEnabled(true);
             mcs.forEach((mc) -> {
                 Macs.addItem(mc.getNumero());
             });
-        } else {
-            Macs.setEnabled(false);
         }
         if (!ipds.isEmpty() && ipds.get(0).getNumero() != null) {
+            Ipads.setEnabled(true);
             ipds.forEach((ipd) -> {
                 Ipads.addItem(ipd.getNumero());
             });
-        } else {
-            Ipads.setEnabled(false);
         }
-        C_Mac.setEnabled(false);
-        C_Ipad.setEnabled(false);
+        Cargando.setVisible(false);
     }
 
     private void ActualizarPrestamo() {
@@ -129,10 +140,16 @@ public class Prestamos_New_or_Update extends SimpleForm {
         PrestamosController pc = new PrestamosController();
         if (pc.ActualizarPrestamo(pr)) {
             JOptionPane.showMessageDialog(app, "Se actualizo el prestamo", "Exito", JOptionPane.INFORMATION_MESSAGE);
-            pv.CargarPrestamos();
-            FormManager.CambiarTexto("  Prestamos");
-            FormManager.showForm(pv);
+            new Thread() {
+                public void run() {
+                    pv.CargarPrestamos();
+                    FormManager.CambiarTexto("  Prestamos");
+                    FormManager.showForm(pv);
+                }
+            }.start();
         } else {
+            Cargando.setVisible(false);
+            Guardar.setEnabled(true);
             JOptionPane.showMessageDialog(app, "Hubo un error en el proceso", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -153,20 +170,24 @@ public class Prestamos_New_or_Update extends SimpleForm {
         PrestamosController pc = new PrestamosController();
         if (pc.InsertPrestamo(presta)) {
             JOptionPane.showMessageDialog(app, "Se registro el prestamo", "Exito", JOptionPane.INFORMATION_MESSAGE);
-            pv.CargarPrestamos();
-            FormManager.CambiarTexto("  Prestamos");
-            FormManager.showForm(pv);
+            new Thread() {
+                public void run() {
+                    pv.CargarPrestamos();
+                    FormManager.CambiarTexto("  Prestamos");
+                    FormManager.showForm(pv);
+                }
+            }.start();
         } else {
+            Cargando.setVisible(false);
+            Guardar.setEnabled(true);
             JOptionPane.showMessageDialog(app, "Hubo un error en el proceso", "Error", JOptionPane.ERROR_MESSAGE);
         }
-
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Guardar = new javax.swing.JButton();
         crazyPanel1 = new raven.crazypanel.CrazyPanel();
         label = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -187,16 +208,9 @@ public class Prestamos_New_or_Update extends SimpleForm {
         jLabel9 = new javax.swing.JLabel();
         Entrada = new javax.swing.JFormattedTextField();
         Salida = new javax.swing.JFormattedTextField();
-
-        Guardar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        Guardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Icons/guardar.png"))); // NOI18N
-        Guardar.setText("Guardar");
-        Guardar.setEnabled(false);
-        Guardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                GuardarActionPerformed(evt);
-            }
-        });
+        jPanel1 = new javax.swing.JPanel();
+        Guardar = new javax.swing.JButton();
+        Cargando = new javax.swing.JLabel();
 
         crazyPanel1.setFlatLafStyleComponent(new raven.crazypanel.FlatLafStyleComponent(
             "background:$Table.background;[light]border:0,0,0,0,shade(@background,5%),,20;[dark]border:0,0,0,0,tint(@background,5%),,20",
@@ -325,6 +339,7 @@ public class Prestamos_New_or_Update extends SimpleForm {
         crazyPanel1.add(Fecha);
 
         C_Mac.setText("Mac");
+        C_Mac.setEnabled(false);
         C_Mac.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 C_MacActionPerformed(evt);
@@ -333,6 +348,7 @@ public class Prestamos_New_or_Update extends SimpleForm {
         crazyPanel1.add(C_Mac);
 
         C_Ipad.setText("Ipad");
+        C_Ipad.setEnabled(false);
         C_Ipad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 C_IpadActionPerformed(evt);
@@ -384,6 +400,22 @@ public class Prestamos_New_or_Update extends SimpleForm {
         });
         crazyPanel1.add(Salida);
 
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        Guardar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        Guardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Icons/guardar.png"))); // NOI18N
+        Guardar.setText("Guardar");
+        Guardar.setEnabled(false);
+        Guardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GuardarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(Guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 7, -1, -1));
+
+        Cargando.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Icons/cargando.gif"))); // NOI18N
+        jPanel1.add(Cargando, new org.netbeans.lib.awtextra.AbsoluteConstraints(109, 0, -1, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -394,7 +426,7 @@ public class Prestamos_New_or_Update extends SimpleForm {
                     .addComponent(crazyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1085, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(Guardar)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -404,7 +436,7 @@ public class Prestamos_New_or_Update extends SimpleForm {
                 .addContainerGap()
                 .addComponent(crazyPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(Guardar)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -430,13 +462,19 @@ public class Prestamos_New_or_Update extends SimpleForm {
     }//GEN-LAST:event_EntradaMousePressed
 
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
-        if (pr != null) {
-            //Actualizar
-            ActualizarPrestamo();
-        } else {
-            //Insertar
-            InsertarPrestamo();
-        }
+        Cargando.setVisible(true);
+        Guardar.setEnabled(false);
+        new Thread() {
+            public void run() {
+                if (pr != null) {
+                    //Actualizar
+                    ActualizarPrestamo();
+                } else {
+                    //Insertar
+                    InsertarPrestamo();
+                }
+            }
+        }.start();
     }//GEN-LAST:event_GuardarActionPerformed
 
     private void SalidaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SalidaMousePressed
@@ -556,6 +594,7 @@ public class Prestamos_New_or_Update extends SimpleForm {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox C_Ipad;
     private javax.swing.JCheckBox C_Mac;
+    private javax.swing.JLabel Cargando;
     private javax.swing.JCheckBox Credencial;
     private javax.swing.JFormattedTextField Entrada;
     private javax.swing.JFormattedTextField Fecha;
@@ -574,6 +613,7 @@ public class Prestamos_New_or_Update extends SimpleForm {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel label;
     // End of variables declaration//GEN-END:variables
 }

@@ -54,14 +54,20 @@ public class EquiposView extends SimpleForm implements TableActionEvent {
 
         if (!mc.isEmpty() && mc.get(0).getNumero() != null) {
             DataTable(modelo_macs, MacsTable, 0);
-        } else {
-            JOptionPane.showMessageDialog(app, "No hay macs para mostrar", "Macs", JOptionPane.WARNING_MESSAGE);
         }
         if (!id.isEmpty() && id.get(0).getNumero() != null) {
             DataTable(modelo_ipads, IpadsTable, 1);
-        } else {
-            JOptionPane.showMessageDialog(app, "No hay ipads para mostrar", "Ipads", JOptionPane.WARNING_MESSAGE);
         }
+        cmdAddMac.setEnabled(true);
+        cmdNotesMacs.setEnabled(true);
+        cmdEditMac.setEnabled(false);
+        cmdAddNoteMac.setEnabled(false);
+        cmdAddIpad.setEnabled(true);
+        cmdNotesIpads.setEnabled(true);
+        cmdEditIpad.setEnabled(false);
+        cmdAddNoteIpad.setEnabled(false);
+        CargandoMacs.setVisible(false);
+        CargandoIpads.setVisible(false);
     }
 
     private void DataTable(DefaultTableModel modelo, JTable tabla, int opcion) {
@@ -119,6 +125,7 @@ public class EquiposView extends SimpleForm implements TableActionEvent {
         crazyPanel2 = new raven.crazypanel.CrazyPanel();
         crazyPanel3 = new raven.crazypanel.CrazyPanel();
         jLabel1 = new javax.swing.JLabel();
+        CargandoMacs = new javax.swing.JLabel();
         cmdAddMac = new javax.swing.JButton();
         cmdNotesMacs = new javax.swing.JButton();
         cmdEditMac = new javax.swing.JButton();
@@ -128,6 +135,7 @@ public class EquiposView extends SimpleForm implements TableActionEvent {
         crazyPanel4 = new raven.crazypanel.CrazyPanel();
         crazyPanel5 = new raven.crazypanel.CrazyPanel();
         jLabel2 = new javax.swing.JLabel();
+        CargandoIpads = new javax.swing.JLabel();
         cmdAddIpad = new javax.swing.JButton();
         cmdNotesIpads = new javax.swing.JButton();
         cmdEditIpad = new javax.swing.JButton();
@@ -164,6 +172,7 @@ public class EquiposView extends SimpleForm implements TableActionEvent {
             "background:$Table.background",
             new String[]{
                 "",
+                "",
                 "background:lighten(@background,8%);borderWidth:1",
                 "background:lighten(@background,8%);borderWidth:1",
                 "background:lighten(@background,8%);borderWidth:1",
@@ -175,8 +184,8 @@ public class EquiposView extends SimpleForm implements TableActionEvent {
             "[grow0,center][fill]",
             "[grow 0,center]",
             new String[]{
-                "span 4,al center,wrap",
-                "",
+                "split 2,span 4,grow",
+                "wrap",
                 "",
                 "",
                 ""
@@ -188,7 +197,11 @@ public class EquiposView extends SimpleForm implements TableActionEvent {
         jLabel1.setText("Macs");
         crazyPanel3.add(jLabel1);
 
+        CargandoMacs.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Icons/cargando.gif"))); // NOI18N
+        crazyPanel3.add(CargandoMacs);
+
         cmdAddMac.setText("Agregar Mac");
+        cmdAddMac.setEnabled(false);
         cmdAddMac.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmdAddMacActionPerformed(evt);
@@ -197,6 +210,7 @@ public class EquiposView extends SimpleForm implements TableActionEvent {
         crazyPanel3.add(cmdAddMac);
 
         cmdNotesMacs.setText("Mostrar las notas");
+        cmdNotesMacs.setEnabled(false);
         cmdNotesMacs.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmdNotesMacsActionPerformed(evt);
@@ -274,6 +288,7 @@ public class EquiposView extends SimpleForm implements TableActionEvent {
             "background:$Table.background",
             new String[]{
                 "",
+                "",
                 "background:lighten(@background,8%);borderWidth:1",
                 "background:lighten(@background,8%);borderWidth:1",
                 "background:lighten(@background,8%);borderWidth:1",
@@ -285,8 +300,8 @@ public class EquiposView extends SimpleForm implements TableActionEvent {
             "[grow 0,center][fill]",
             "[grow 0,center]",
             new String[]{
-                "span 4,al center,wrap",
-                "",
+                "split 2,span 4,grow",
+                "wrap",
                 "",
                 "",
                 ""
@@ -298,7 +313,11 @@ public class EquiposView extends SimpleForm implements TableActionEvent {
         jLabel2.setText("Ipads");
         crazyPanel5.add(jLabel2);
 
+        CargandoIpads.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Icons/cargando.gif"))); // NOI18N
+        crazyPanel5.add(CargandoIpads);
+
         cmdAddIpad.setText("Agregar Ipad");
+        cmdAddIpad.setEnabled(false);
         cmdAddIpad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmdAddIpadActionPerformed(evt);
@@ -307,6 +326,7 @@ public class EquiposView extends SimpleForm implements TableActionEvent {
         crazyPanel5.add(cmdAddIpad);
 
         cmdNotesIpads.setText("Mostrar las notas");
+        cmdNotesIpads.setEnabled(false);
         cmdNotesIpads.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmdNotesIpadsActionPerformed(evt);
@@ -380,7 +400,7 @@ public class EquiposView extends SimpleForm implements TableActionEvent {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(crazyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)
+                .addComponent(crazyPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -476,6 +496,8 @@ public class EquiposView extends SimpleForm implements TableActionEvent {
     }//GEN-LAST:event_cmdAddIpadActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel CargandoIpads;
+    private javax.swing.JLabel CargandoMacs;
     private javax.swing.JTable IpadsTable;
     private javax.swing.JTable MacsTable;
     private javax.swing.JButton cmdAddIpad;

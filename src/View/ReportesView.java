@@ -37,10 +37,14 @@ public class ReportesView extends javax.swing.JPanel {
     public ReportesView() {
         initComponents();
         CargarImprimir.setVisible(false);
-        CargarSearch.setVisible(false);
         modelo = (DefaultTableModel) jTable1.getModel();
         init(jTable1);
-        CargarPrestamos();
+        new Thread() {
+            @Override
+            public void run() {
+                CargarPrestamos();
+            }
+        }.start();
         dch.setTextField(Rango);
         dch.setDateSelectionMode(DateChooser.DateSelectionMode.BETWEEN_DATE_SELECTED);
         dch.addActionDateChooserListener(new DateChooserAdapter() {
@@ -207,6 +211,7 @@ public class ReportesView extends javax.swing.JPanel {
             imprimir.setVisible(false);
             JOptionPane.showMessageDialog(this, "No hay registros para mostrar", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
+        CargarSearch.setVisible(false);
     }
 
     private void DataTable() {

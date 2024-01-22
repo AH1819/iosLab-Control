@@ -35,7 +35,12 @@ public class DocentesView extends SimpleForm {
         this.app = app;
         init(DocentesTable, 4);
         modelo = (DefaultTableModel) DocentesTable.getModel();
-        CargarDocentes();
+        new Thread() {
+            @Override
+            public void run() {
+                CargarDocentes();
+            }
+        }.start();
     }
 
     public void CargarDocentes() {
@@ -243,7 +248,14 @@ public class DocentesView extends SimpleForm {
                 }
             }
             if (evt.getClickCount() == 2 && DocentesTable.getSelectedColumn() == 4) {
-                Baja_Alta();
+                new Thread() {
+                    @Override
+                    public void run() {
+                        Cargando.setVisible(true);
+                        Baja_Alta();
+                        Cargando.setVisible(false);
+                    }
+                }.start();
             }
         }
     }//GEN-LAST:event_DocentesTableMouseClicked

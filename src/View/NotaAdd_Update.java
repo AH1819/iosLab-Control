@@ -15,7 +15,6 @@ public class NotaAdd_Update extends javax.swing.JDialog {
     NotasController EC = new NotasController();
     NotasModalView ntv;
     Notas_Globales ng;
-    boolean status;
     EquiposView ev;
     PrestamosView pv;
 
@@ -28,6 +27,7 @@ public class NotaAdd_Update extends javax.swing.JDialog {
         this.pv = ev;
         this.id.setText(id);
         this.identificador = id;
+        Cargando.setVisible(false);
     }
 
     //Constructor para equipos
@@ -39,6 +39,7 @@ public class NotaAdd_Update extends javax.swing.JDialog {
         this.id.setText(id);
         this.dispo = dispo;
         this.identificador = id;
+        Cargando.setVisible(false);
     }
 
     //Constructor para Notas Globales
@@ -46,9 +47,9 @@ public class NotaAdd_Update extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.ng = (Notas_Globales) parent;
-        status = false;
         this.setLocationRelativeTo(this);
         this.jLabel2.setText("Global");
+        Cargando.setVisible(false);
     }
 
     //Construtor para editar Nota
@@ -66,7 +67,6 @@ public class NotaAdd_Update extends javax.swing.JDialog {
         } else if (id.contains("N/E")) {
             jLabel2.setText("Global:");
             id = referencia;
-            status = true;
         } else {
             jLabel2.setText("Prestacion:");
         }
@@ -74,6 +74,7 @@ public class NotaAdd_Update extends javax.swing.JDialog {
         this.id.setText(id);
         this.texto.setText(nota);
         this.identificador = referencia;
+        Cargando.setVisible(false);
     }
 
     //Insertar notas equipo
@@ -89,6 +90,9 @@ public class NotaAdd_Update extends javax.swing.JDialog {
         } else {
             JOptionPane.showMessageDialog(this, "No se pudo guardar", "Error", JOptionPane.ERROR_MESSAGE);
         }
+        Cargando.setVisible(false);
+        Guardar.setEnabled(true);
+        texto.setEnabled(true);
     }
 
     //Insertar notas registro de prestaciones
@@ -103,6 +107,9 @@ public class NotaAdd_Update extends javax.swing.JDialog {
         } else {
             JOptionPane.showMessageDialog(this, "No se pudo guardar", "Error", JOptionPane.ERROR_MESSAGE);
         }
+        Cargando.setVisible(false);
+        Guardar.setEnabled(true);
+        texto.setEnabled(true);
     }
 
     //Insertar nota global
@@ -117,6 +124,9 @@ public class NotaAdd_Update extends javax.swing.JDialog {
         } else {
             JOptionPane.showMessageDialog(this, "No se pudo guardar", "Error", JOptionPane.ERROR_MESSAGE);
         }
+        Cargando.setVisible(false);
+        Guardar.setEnabled(true);
+        texto.setEnabled(true);
     }
 
     //Editar notas
@@ -131,6 +141,9 @@ public class NotaAdd_Update extends javax.swing.JDialog {
         } else {
             JOptionPane.showMessageDialog(this, "No se pudo actualizar", "Error", JOptionPane.ERROR_MESSAGE);
         }
+        Cargando.setVisible(false);
+        Guardar.setEnabled(true);
+        texto.setEnabled(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -142,7 +155,9 @@ public class NotaAdd_Update extends javax.swing.JDialog {
         texto = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
         id = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         Guardar = new javax.swing.JButton();
+        Cargando = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setAlwaysOnTop(true);
@@ -168,17 +183,21 @@ public class NotaAdd_Update extends javax.swing.JDialog {
 
         id.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
 
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         Guardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Icons/notas.png"))); // NOI18N
         Guardar.setText("Guardar");
         Guardar.setEnabled(false);
-        Guardar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        Guardar.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        Guardar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        Guardar.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         Guardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 GuardarActionPerformed(evt);
             }
         });
+        jPanel1.add(Guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 12, -1, -1));
+
+        Cargando.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Icons/cargando.gif"))); // NOI18N
+        jPanel1.add(Cargando, new org.netbeans.lib.awtextra.AbsoluteConstraints(117, 5, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -187,17 +206,17 @@ public class NotaAdd_Update extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(Guardar)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -211,7 +230,7 @@ public class NotaAdd_Update extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(Guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -227,25 +246,35 @@ public class NotaAdd_Update extends javax.swing.JDialog {
     }//GEN-LAST:event_textoKeyReleased
 
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
-        if (ev != null) {
-            InsertarNotaEQ(identificador, dispo);
-        }
-        if (pv != null) {
-            InsertarNotaPR(Integer.valueOf(identificador));
-        }
-        if (ntv != null || (ng != null && jLabel1.getText().equals("Editar Nota"))) {
-            EditarNota(Integer.valueOf(identificador));
-        }
-        if (ng != null && jLabel1.getText().equals("Agregar Nota")) {
-            InsertarNotaGB();
-        }
+        Cargando.setVisible(true);
+        Guardar.setEnabled(false);
+        texto.setEnabled(false);
+        new Thread() {
+            @Override
+            public void run() {
+                if (ev != null) {
+                    InsertarNotaEQ(identificador, dispo);
+                }
+                if (pv != null) {
+                    InsertarNotaPR(Integer.valueOf(identificador));
+                }
+                if (ntv != null || (ng != null && jLabel1.getText().equals("Editar Nota"))) {
+                    EditarNota(Integer.valueOf(identificador));
+                }
+                if (ng != null && jLabel1.getText().equals("Agregar Nota")) {
+                    InsertarNotaGB();
+                }
+            }
+        }.start();
     }//GEN-LAST:event_GuardarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Cargando;
     private javax.swing.JButton Guardar;
     private javax.swing.JLabel id;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea texto;
     // End of variables declaration//GEN-END:variables

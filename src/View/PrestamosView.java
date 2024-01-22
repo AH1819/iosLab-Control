@@ -43,8 +43,8 @@ public class PrestamosView extends SimpleForm implements TableActionEvent {
         new Thread() {
             @Override
             public void run() {
-                CargarPersonas();
                 CargarPrestamos();
+                CargarPersonas();
             }
         }.start();
     }
@@ -59,9 +59,7 @@ public class PrestamosView extends SimpleForm implements TableActionEvent {
                     Docentes.addItem(docente.getNombre() + " " + docente.getApellido_p() + " " + docente.getApellido_m());
                 }
             });
-        } else {
-            Docentes.setEnabled(false);
-            JOptionPane.showMessageDialog(app, "No se encontraron registros de docentes", "Aviso", JOptionPane.WARNING_MESSAGE);
+            Docentes.setEnabled(true);
         }
         if (!alumnos.isEmpty() && alumnos.get(0).getMatricula() != null) {
             Alumnos.addItem("Selecciona una opcion");
@@ -70,9 +68,7 @@ public class PrestamosView extends SimpleForm implements TableActionEvent {
                     Alumnos.addItem(alumno.getNombre() + " " + alumno.getApellido_p() + " " + alumno.getApellido_m());
                 }
             });
-        } else {
-            Alumnos.setEnabled(false);
-            JOptionPane.showMessageDialog(app, "No se encontraron registros de alumnos", "Aviso", JOptionPane.WARNING_MESSAGE);
+            Alumnos.setEnabled(true);
         }
         Cargando.setVisible(false);
     }
@@ -83,12 +79,13 @@ public class PrestamosView extends SimpleForm implements TableActionEvent {
         prestamos = Datos_Cargados.getPrestamos_guardados();
         if (!prestamos.isEmpty() && prestamos.get(0).getNombre() != null) {
             DataTable();
-        } else {
-            JOptionPane.showMessageDialog(app, "No hay registros para mostrar", "Aviso", JOptionPane.WARNING_MESSAGE);
+            cmdNote.setEnabled(true);
         }
+        System.out.println("listo");
     }
 
     private void DataTable() {
+        System.out.println("Entra");
         modelo.setRowCount(0);
         for (Prestamos pr : prestamos) {
             Object[] fila = {
@@ -192,6 +189,7 @@ public class PrestamosView extends SimpleForm implements TableActionEvent {
         jLabel2.setText("Docente:");
         crazyPanel2.add(jLabel2);
 
+        Docentes.setEnabled(false);
         Docentes.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 DocentesItemStateChanged(evt);
@@ -207,6 +205,7 @@ public class PrestamosView extends SimpleForm implements TableActionEvent {
         jLabel3.setText("Alumno:");
         crazyPanel2.add(jLabel3);
 
+        Alumnos.setEnabled(false);
         Alumnos.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 AlumnosItemStateChanged(evt);
@@ -225,6 +224,7 @@ public class PrestamosView extends SimpleForm implements TableActionEvent {
         crazyPanel2.add(Cargando);
 
         cmdNote.setText("Mostrar notas");
+        cmdNote.setEnabled(false);
         cmdNote.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmdNoteActionPerformed(evt);
@@ -304,22 +304,24 @@ public class PrestamosView extends SimpleForm implements TableActionEvent {
                     Docente dct = (Docente) buscarPersonaId(docentes, null, String.valueOf(number), 1);
                     if (dct != null) {
                         if (!Repetido(String.valueOf(number))) {
+                            System.out.println("Listo");
                             FormManager.CambiarTexto("  Registrar Prestamo");
                             FormManager.showForm(new Prestamos_New_or_Update(app, this, null, dct));
                         }
                     } else {
-                        JOptionPane.showMessageDialog(app, "No se encontro registro alguno", "Aviso", JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(app, "No se encontro coincidencia alguna", "Aviso", JOptionPane.WARNING_MESSAGE);
                     }
                 } catch (NumberFormatException e) {
                     String matricula = txtSearch.getText().toUpperCase();
                     Alumno alm = (Alumno) buscarPersonaId(null, alumnos, matricula, 2);
                     if (alm != null) {
                         if (!Repetido(matricula)) {
+                            System.out.println("Listo");
                             FormManager.CambiarTexto("  Registrar Prestamo");
                             FormManager.showForm(new Prestamos_New_or_Update(app, this, alm, null));
                         }
                     } else {
-                        JOptionPane.showMessageDialog(app, "No se encontraron registros de alumnos", "Aviso", JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(app, "No se encontro coincidencia alguna", "Aviso", JOptionPane.WARNING_MESSAGE);
                     }
                 }
                 Cargando.setVisible(false);
@@ -354,6 +356,7 @@ public class PrestamosView extends SimpleForm implements TableActionEvent {
             for (Alumno alumno : alumnos) {
                 if ((alumno.getNombre() + " " + alumno.getApellido_p() + " " + alumno.getApellido_m()).equals(Alumnos.getSelectedItem())) {
                     if (!Repetido(alumno.getMatricula())) {
+                        System.out.println("Listo");
                         FormManager.CambiarTexto("  Registrar Prestamo");
                         FormManager.showForm(new Prestamos_New_or_Update(app, this, alumno, null));
                     }
@@ -368,6 +371,7 @@ public class PrestamosView extends SimpleForm implements TableActionEvent {
             for (Docente docente : docentes) {
                 if ((docente.getNombre() + " " + docente.getApellido_p() + " " + docente.getApellido_m()).equals(Docentes.getSelectedItem())) {
                     if (!Repetido(docente.getNumero_plaza())) {
+                        System.out.println("Listo");
                         FormManager.CambiarTexto("  Registrar Prestamo");
                         FormManager.showForm(new Prestamos_New_or_Update(app, this, null, docente));
                     }
