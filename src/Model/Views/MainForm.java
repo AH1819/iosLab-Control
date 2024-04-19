@@ -4,6 +4,7 @@ import View.Application;
 import View.Notas_Globales;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import java.awt.Color;
 import java.awt.Component;
 import javax.swing.Icon;
 import javax.swing.JButton;
@@ -29,7 +30,7 @@ public class MainForm extends JPanel {
         putClientProperty(FlatClientProperties.STYLE, ""
                 + "border:5,5,5,5;"
                 + "arc:30");
-        setLayout(new MigLayout("wrap,fillx", "[fill]", "[fill]"));
+        setLayout(new MigLayout("wrap,fill", "[fill]", "[grow 0][fill]"));
         header = createHeader();
         panelSlider = new PanelSlider();
         JScrollPane scroll = new JScrollPane(panelSlider);

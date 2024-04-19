@@ -34,6 +34,7 @@ public class Alumno_New_or_Update extends SimpleForm {
             RellenarInformacion();
         }
         alumnos = Datos_Cargados.getAlumnos_guardados();
+        Cargando.setVisible(false);
     }
 
     private void RellenarInformacion() {
@@ -49,7 +50,6 @@ public class Alumno_New_or_Update extends SimpleForm {
         Grupo.setText(alumno.getGrupo());
         Email.setText(alumno.getCorreo());
         Guardar.setEnabled(false);
-        Cargando.setVisible(false);
     }
 
     private void ComprobarMatricula(String matricula) {

@@ -12,6 +12,7 @@ import com.formdev.flatlaf.fonts.roboto.FlatRobotoFont;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import java.awt.Font;
+import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 import raven.alerts.MessageAlerts;
 import raven.popup.GlassPanePopup;
@@ -28,12 +29,18 @@ public class Login extends javax.swing.JFrame {
         initComponents();
         Cargando.setVisible(false);
         this.setLocationRelativeTo(this);
+        IconoVentana();
         GlassPanePopup.install(this);
         login.putClientProperty(FlatClientProperties.STYLE, ""
                 + "background:$Login.background;"
                 + "arc:50");
     }
-
+    
+    private void IconoVentana() {
+        ImageIcon icono = new ImageIcon(Login.class.getResource("/Recursos/Icons/icono.png"));
+        setIconImage(icono.getImage());
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

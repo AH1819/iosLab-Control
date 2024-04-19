@@ -15,10 +15,9 @@ public class TimeModal extends javax.swing.JDialog {
         initComponents();
         this.setLocationRelativeTo(this);
         if (!hora.getText().isEmpty()) {
-            System.out.println(hora.getText());
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-            LocalTime horaLocalTime = LocalTime.parse(hora.getText(), formatter);
-            Time.setSelectedTime(horaLocalTime);
+            LocalTime horaLocalTimeInicial = LocalTime.parse(hora.getText(), formatter);
+            Time.setSelectedTime(horaLocalTimeInicial);
         }
         Time.setEditor(hora);
     }

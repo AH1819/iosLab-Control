@@ -35,6 +35,7 @@ public class Docente_New_or_Update extends SimpleForm {
             RellenarInformacion();
         }
         docentes = Datos_Cargados.getDocentes_guardados();
+        Cargando.setVisible(false);
     }
 
     private void RellenarInformacion() {
@@ -48,7 +49,6 @@ public class Docente_New_or_Update extends SimpleForm {
         Procedencia.setText(docente.getInstitucion());
         Email.setText(docente.getCorreo());
         Guardar.setEnabled(false);
-        Cargando.setVisible(false);
     }
 
     private void ComprobarNumeroPlaza(String plaza) {

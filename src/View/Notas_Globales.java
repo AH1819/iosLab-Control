@@ -78,6 +78,8 @@ public class Notas_Globales extends javax.swing.JDialog implements TableActionEv
                 modelo.addRow(fila);
             }
             NotasTable.setModel(modelo);
+        }else{
+            modelo.setRowCount(0);
         }
         Cargando.setVisible(false);
     }

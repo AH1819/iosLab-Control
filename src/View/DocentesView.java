@@ -50,6 +50,7 @@ public class DocentesView extends SimpleForm {
             DataTable();
             txtSearch.setEnabled(true);
         } else {
+            modelo.setRowCount(0);
             txtSearch.setEnabled(false);
             JOptionPane.showMessageDialog(app, "No hay registros para mostrar", "Aviso", JOptionPane.INFORMATION_MESSAGE);
         }

@@ -50,12 +50,10 @@ public class Jasper {
                     rv.imprimir.setEnabled(true);
                 }
             });
-            System.out.println("eeee");
 
         } catch (JRException ex) {
             Logger.getLogger(Jasper.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("eeee");
     }
 
 }

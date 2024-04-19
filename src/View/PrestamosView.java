@@ -80,12 +80,12 @@ public class PrestamosView extends SimpleForm implements TableActionEvent {
         if (!prestamos.isEmpty() && prestamos.get(0).getNombre() != null) {
             DataTable();
             cmdNote.setEnabled(true);
+        } else {
+            modelo.setRowCount(0);
         }
-        System.out.println("listo");
     }
 
     private void DataTable() {
-        System.out.println("Entra");
         modelo.setRowCount(0);
         for (Prestamos pr : prestamos) {
             Object[] fila = {

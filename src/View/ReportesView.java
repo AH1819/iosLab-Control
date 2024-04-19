@@ -200,7 +200,14 @@ public class ReportesView extends javax.swing.JPanel {
     }//GEN-LAST:event_imprimirActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        CargarPrestamos();
+        CargarSearch.setVisible(true);
+        jButton1.setEnabled(false);
+        new Thread() {
+            @Override
+            public void run() {
+                CargarPrestamos();
+            }
+        }.start();
         status = true;
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -209,9 +216,13 @@ public class ReportesView extends javax.swing.JPanel {
         pdc.GetPrestaciones();
         filtro = Datos_Cargados.getPrestamos_guardados();
         if (!filtro.isEmpty() && filtro.get(0).getNombre() != null) {
+            jButton1.setEnabled(true);
+            imprimir.setEnabled(true);
             DataTable();
         } else {
-            imprimir.setVisible(false);
+            modelo.setRowCount(0);
+            jButton1.setEnabled(false);
+            imprimir.setEnabled(false);
             JOptionPane.showMessageDialog(this, "No hay registros para mostrar", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
         CargarSearch.setVisible(false);
@@ -241,7 +252,7 @@ public class ReportesView extends javax.swing.JPanel {
         filtro = (ArrayList<Prestamos>) Datos_Cargados.getPrestamos_guardados().stream().filter((fecha) -> fecha.getFecha().compareTo(inicio) >= 0 && fecha.getFecha().compareTo(fin) <= 0).collect(Collectors.toList());
         if (!filtro.isEmpty()) {
             modelo.setRowCount(0);
-            imprimir.setVisible(true);
+            imprimir.setEnabled(true);
             for (Prestamos pr : filtro) {
                 Object[] fila = {
                     pr.getIdentificador(),
@@ -255,6 +266,9 @@ public class ReportesView extends javax.swing.JPanel {
                 modelo.addRow(fila);
             }
             jTable1.setModel(modelo);
+        } else {
+            imprimir.setEnabled(false);
+            modelo.setRowCount(0);
         }
         CargarSearch.setVisible(false);
     }

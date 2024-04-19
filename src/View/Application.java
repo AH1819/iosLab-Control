@@ -1,12 +1,12 @@
 package View;
 
-import Controller.EquiposController;
 import Controller.PersonasController;
 import com.formdev.flatlaf.util.UIScale;
 import java.awt.Dimension;
 import javax.swing.JFrame;
 import Model.Views.Background;
 import Model.Views.FormManager;
+import javax.swing.ImageIcon;
 import raven.popup.GlassPanePopup;
 
 /**
@@ -30,8 +30,14 @@ public class Application extends JFrame {
         setContentPane(new Background());
         FormManager.install(this);
         FormManager.showForm(new PrestamosView(this));
+        IconoVentana();
     }
-
+    
+    private void IconoVentana() {
+        ImageIcon icono = new ImageIcon(Application.class.getResource("/Recursos/Icons/icono.png"));
+        setIconImage(icono.getImage());
+    }
+    
     private void CargarDatos() {
         PersonasController pc = new PersonasController();
         pc.CargarAlumnos();

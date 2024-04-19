@@ -98,6 +98,7 @@ public class NotasModalView extends javax.swing.JDialog implements TableActionEv
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(400, 300));
+        setModal(true);
 
         crazyPanel1.setFlatLafStyleComponent(new raven.crazypanel.FlatLafStyleComponent(
             "background:$Table.background;[light]border:0,0,0,0,shade(@background,5%),,20;[dark]border:0,0,0,0,tint(@background,5%),,20",
@@ -190,6 +191,8 @@ public class NotasModalView extends javax.swing.JDialog implements TableActionEv
                 modelo.addRow(fila);
             }
             Table.setModel(modelo);
+        } else {
+            modelo.setRowCount(0);
         }
         Table.getColumnModel().getColumn(2).setHeaderValue("Prestacion");
         Cargando.setVisible(false);
@@ -221,6 +224,7 @@ public class NotasModalView extends javax.swing.JDialog implements TableActionEv
         String[] arreglo = {"Si", "No"};
         int opcionp = JOptionPane.showOptionDialog(this, "¿Esta seguro de eliminar este registro? \nSe borraran todos los datos relacionados", "Eliminar", 0, JOptionPane.ERROR_MESSAGE, null, arreglo, "No");
         if (arreglo[opcionp].equals("Si")) {
+            System.out.println("Entra");
             Cargando.setVisible(true);
             int id_rg = Integer.parseInt(Table.getValueAt(row, 0).toString());
             new Thread() {

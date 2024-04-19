@@ -54,9 +54,13 @@ public class EquiposView extends SimpleForm implements TableActionEvent {
 
         if (!mc.isEmpty() && mc.get(0).getNumero() != null) {
             DataTable(modelo_macs, MacsTable, 0);
+        } else {
+            modelo_macs.setRowCount(0);
         }
         if (!id.isEmpty() && id.get(0).getNumero() != null) {
             DataTable(modelo_ipads, IpadsTable, 1);
+        } else {
+            modelo_ipads.setRowCount(0);
         }
         cmdAddMac.setEnabled(true);
         cmdNotesMacs.setEnabled(true);
@@ -181,7 +185,7 @@ public class EquiposView extends SimpleForm implements TableActionEvent {
         ));
         crazyPanel3.setMigLayoutConstraints(new raven.crazypanel.MigLayoutConstraints(
             "fill",
-            "[grow0,center][fill]",
+            "[grow 0][fill]",
             "[grow 0,center]",
             new String[]{
                 "split 2,span 4,grow",
